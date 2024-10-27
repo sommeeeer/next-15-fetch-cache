@@ -1,6 +1,8 @@
-export const dynamic = 'force-dynamic';
+import { headers } from "next/headers";
 
 export default async function Page() {
+  const headersFromReq = await headers();
+  const host = headersFromReq.get("host")
   const responseSST = await fetch("https://sst.dev", {
     next: {
       tags: ["path"],
@@ -15,6 +17,7 @@ export default async function Page() {
   const dateInOpenNext = responseOpenNext.headers.get("date");
   return (
     <div>
+      <h3>Host: {host}</h3>
       <h1>Request id from SST</h1>
       <p>RequestID: {reqIdSst}</p>
       <h1>Date from from OpenNext</h1>
